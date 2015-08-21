@@ -39,3 +39,4 @@ commit文件是用于记录每一次提交的文件。包含的内容有：tree、parents、author、commi
 
 ## Summary
 Now i got an overview about the principle and workflow of git, it's really simple and stupid.
+And i mainly refer to this [artical](http://blog.csdn.net/gsyzhu/article/details/38065765).
