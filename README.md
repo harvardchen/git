@@ -7,17 +7,23 @@ reading the source code. Have fun!(the origin README is [here](./linus.README))
 linus称这是一个stupid content tracker,从其基本原理和初始代码来看，的确是这样。
 SHA(Secure Hash Alogorithm)是一个很重要的概念，通过SHA值判断文件是否变化，tree和commit
 也通过Object文件存储，这样每个文件，tree和commit也就通过SHA值来唯一标识。
+
 ![init commit files](./img/src.png)
 
 
 ## The Object Database(SHA1 FILE DIRECTORY)
 这是一个用于存储SHI1文件的文件数据库，其实本质上只是一个文件夹，用于存放所提交的文件。文件包含Metadata信息和Blob内容，经由Zlib压缩后算出SHA1，该SHA1的前2位作为子文件夹名，后38位作为文件名。目录下图所示。
+
 ![object directory](./img/object.png)
+
 这里存放的文件包括三种：tree、blob和commit.
+
 ### blob
 blob文件是指具体的文件内容，即我们所提交的文件。Blob文件会被压缩，然后计算SHA1值，所以如果文件的内容没有发生变化，那么就不会产生新的Blob文件。因为它们算出的SHA1是相同的，而SHA1值就是它们实际的存放路径。
+
 ### tree
 tree文件中存放的是所提交的文件列表，每一行描述所记录的一个文件，包括：文件的权限、路径名、SHA1值。这个就能够用于保存每一次提交的具体内容，通过查询tree文件，可以知道该次提交时所含有的所有文件，然后根据每一个文件的SHA1，可以在object database中搜索出该文件。这样就达到了保存每一次提交的具体内容的目的。
+
 ### commit
 commit文件是用于记录每一次提交的文件。包含的内容有：tree、parents、author、committer、changelog。其中tree是指用于保存此次提交的tree文件。Parents是指此次提交的父分支是哪些，也是对应的tree文件。Author、committer、changelog是提交的记录信息。
 
